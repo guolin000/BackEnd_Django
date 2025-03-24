@@ -10,7 +10,7 @@ class JwtAuthenticationMiddleware(MiddlewareMixin):
         white_list = ["/user/login", "/user/captcha"]
         path = request.path
         if path not in white_list and not path.startswith("/media"):
-            print('要验证')
+            print('要验证Token')
             token = request.META.get('HTTP_AUTHORIZATION')
             print("token:", token)
             try:
@@ -23,5 +23,5 @@ class JwtAuthenticationMiddleware(MiddlewareMixin):
             except PyJWTError:
                 return HttpResponse('Token验证异常！')
         else:
-            print("不需要验证")
+            print("不需要验证Token")
             return None

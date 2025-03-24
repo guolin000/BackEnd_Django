@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_jwt',
     'user.apps.UserConfig',
-    'role.apps.RoleConfig'
+    'role.apps.RoleConfig',
+    'django_filters',
+    'book',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +55,11 @@ MIDDLEWARE = [
     'user.middleware.JwtAuthenticationMiddleware'
 
 ]
-
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=60),  # Token 有效期 5 分钟
+    'JWT_ALLOW_REFRESH': True,  # 允许 Token 刷新
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
@@ -112,6 +119,10 @@ DATABASES = {
     }
 }
 
+NEO4J_CONFIG = {
+    'uri': 'neo4j://localhost:7687',
+    'auth': ('neo4j', '12345678')
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -151,5 +162,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}

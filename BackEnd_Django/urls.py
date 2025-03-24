@@ -17,14 +17,20 @@ Including another URLconf
 # from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve
-
+from rest_framework_jwt.views import refresh_jwt_token
 from BackEnd_Django import settings
+from django.conf.urls.static import static
+from django.contrib import admin
 
 urlpatterns = [
     #    path('admin/', admin.site.urls),
     path('user/', include('user.urls')),  # 用户模块
     path('role/', include('role.urls')),  # 角色模块
     path('menu/', include('menu.urls')),  # 权限模块
+    path('kg/', include('kg.urls')),
+    path('book/', include('book.urls')),
+    path('api-token-refresh/', refresh_jwt_token),  # Token 刷新端点
     # 配置媒体文件的路由地址
     re_path('media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}, name='media')
+
 ]
