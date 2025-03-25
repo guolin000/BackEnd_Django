@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'role.apps.RoleConfig',
     'django_filters',
     'book',
+    'info_extract',
 ]
 
 MIDDLEWARE = [

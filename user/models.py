@@ -54,7 +54,6 @@ class SysMenuSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
 
     def get_children(self, obj):
-        print("111")
         # print("1", obj.children)
         if hasattr(obj, "children"):
             # if obj.children:

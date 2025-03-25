@@ -29,6 +29,7 @@ urlpatterns = [
     path('menu/', include('menu.urls')),  # 权限模块
     path('kg/', include('kg.urls')),
     path('book/', include('book.urls')),
+    path('info_extract/', include('info_extract.urls')),
     path('api-token-refresh/', refresh_jwt_token),  # Token 刷新端点
     # 配置媒体文件的路由地址
     re_path('media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}, name='media')

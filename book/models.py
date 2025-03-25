@@ -6,7 +6,7 @@ import os
 def book_cover_upload_to(instance, filename):
     ext = filename.split('.')[-1]
     new_name = f"cover_{instance.id}_{instance.title}.{ext}"
-    return os.path.join('book_txt', new_name)
+    return os.path.join('book_cover', new_name)
 
 
 def book_content_upload_to(instance, filename):
@@ -19,7 +19,8 @@ class Book(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200, verbose_name="书名")
     author = models.CharField(max_length=100, verbose_name="作者")
-    dynasty = models.CharField(max_length=50, verbose_name="朝代")
+    dynasty = models.CharField(max_length=50, null=True, blank=True, verbose_name="朝代")
+    year = models.CharField(max_length=60, null=True, blank=True, verbose_name="年份")
     cover = models.ImageField(upload_to=book_cover_upload_to, null=True, blank=True, verbose_name="封面")
     content_file = models.FileField(upload_to=book_content_upload_to, null=True, blank=True, verbose_name="内容文件")
     content_encoding = models.CharField(max_length=50, null=True, blank=True, verbose_name="内容文件编码")  # 新增字段
